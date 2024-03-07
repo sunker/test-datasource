@@ -1,65 +1,53 @@
-import React, { ChangeEvent } from 'react';
-import { InlineField, Input, SecretInput } from '@grafana/ui';
+import React, { ChangeEvent, useState } from 'react';
+import { Checkbox, InlineField, InlineSwitch, Input, RadioButtonGroup, Select } from '@grafana/ui';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { MyDataSourceOptions, MySecureJsonData } from '../types';
+import { MyDataSourceOptions } from '../types';
 
 interface Props extends DataSourcePluginOptionsEditorProps<MyDataSourceOptions> {}
 
+const values = ['val1', 'val2', 'val3'].map((val) => ({ label: val, value: val }));
+
 export function ConfigEditor(props: Props) {
-  const { onOptionsChange, options } = props;
-  const onPathChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const jsonData = {
-      ...options.jsonData,
-      path: event.target.value,
-    };
-    onOptionsChange({ ...options, jsonData });
-  };
-
-  // Secure field (only sent to the backend)
-  const onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onOptionsChange({
-      ...options,
-      secureJsonData: {
-        apiKey: event.target.value,
-      },
-    });
-  };
-
-  const onResetAPIKey = () => {
-    onOptionsChange({
-      ...options,
-      secureJsonFields: {
-        ...options.secureJsonFields,
-        apiKey: false,
-      },
-      secureJsonData: {
-        ...options.secureJsonData,
-        apiKey: '',
-      },
-    });
-  };
-
-  const { jsonData, secureJsonFields } = options;
-  const secureJsonData = (options.secureJsonData || {}) as MySecureJsonData;
+  const [booleanValue, setBooleanValue] = useState(true);
+  const [stringValue, setStringValue] = useState('val2');
 
   return (
     <div className="gf-form-group">
-      <InlineField label="Path" labelWidth={12}>
-        <Input
-          onChange={onPathChange}
-          value={jsonData.path || ''}
-          placeholder="json field returned to frontend"
-          width={40}
+      <div data-testid="test-radio-button-group">
+        <RadioButtonGroup options={values} value={stringValue} onChange={(v) => setStringValue(v)} />
+      </div>
+
+      <InlineField labelWidth={30} label="Inline field with switch">
+        <InlineSwitch
+          label="Inline field with switch"
+          value={booleanValue}
+          onChange={(event) => setBooleanValue(event.currentTarget.checked)}
         />
       </InlineField>
-      <InlineField label="API Key" labelWidth={12}>
-        <SecretInput
-          isConfigured={(secureJsonFields && secureJsonFields.apiKey) as boolean}
-          value={secureJsonData.apiKey || ''}
-          placeholder="secure json field (backend only)"
-          width={40}
-          onReset={onResetAPIKey}
-          onChange={onAPIKeyChange}
+
+      <InlineField labelWidth={30} label="Inline field with checkbox">
+        <Checkbox
+          id="checkbox-inline-field"
+          value={booleanValue}
+          onChange={(event) => setBooleanValue(event.currentTarget.checked)}
+        />
+      </InlineField>
+
+      <InlineField labelWidth={30} label="Inline field with input">
+        <Input
+          value={stringValue}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setStringValue(e.target.value)}
+          id="inline-field-with-input"
+        />
+      </InlineField>
+
+      <InlineField labelWidth={30} label="Inline field with select">
+        <Select
+          data-testid="inline-field-with-select-wrapper"
+          inputId="inline-field-with-select"
+          value={stringValue}
+          options={values}
+          onChange={(values) => setStringValue(values.value!)}
         />
       </InlineField>
     </div>
