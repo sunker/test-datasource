@@ -4,7 +4,6 @@
   "name": "Test-Datasource",
   "id": "sunker-test-datasource",
   "metrics": true,
-  "backend": true,
   "executable": "gpx_test_datasource",
   "info": {
     "description": "",
@@ -22,7 +21,7 @@
     "updated": "%TODAY%"
   },
   "dependencies": {
-    "grafanaDependency": ">=10.3.3",
+    "grafanaDependency": ">=8.5.0",
     "plugins": []
   }
 }
