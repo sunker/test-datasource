@@ -31,8 +31,8 @@ test('Inline field with switch', async ({
 test('Inline field with checkbox', async ({ readProvisionedDataSource, createDataSourceConfigPage, page }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   await createDataSourceConfigPage({ type: ds.type });
-  await page.getByRole('checkbox', { name: 'Inline field with checkbox Checkbox label' }).uncheck({ force: true });
-  await expect(page.getByRole('checkbox', { name: 'Inline field with checkbox Checkbox label' })).not.toBeChecked();
+  await page.getByRole('checkbox', { name: 'Inline field with checkbox' }).uncheck({ force: true });
+  await expect(page.getByRole('checkbox', { name: 'Inline field with checkbox' })).not.toBeChecked();
 });
 
 test('Inline field with input', async ({ readProvisionedDataSource, createDataSourceConfigPage, page }) => {

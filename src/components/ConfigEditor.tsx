@@ -28,7 +28,7 @@ export function ConfigEditor(props: Props) {
 
       <InlineField labelWidth={30} label="Inline field with checkbox">
         <Checkbox
-          label="Checkbox label"
+          // label="Checkbox label"
           id="inline-field-with-checkbox"
           value={booleanValue}
           onChange={(event) => setBooleanValue(event.currentTarget.checked)}
