@@ -40,8 +40,6 @@ test('Inline field with input', async ({ readProvisionedDataSource, createDataSo
   await createDataSourceConfigPage({ type: ds.type });
   await page.getByRole('textbox', { name: 'Inline field with input' }).fill('test');
   await expect(page.getByRole('textbox', { name: 'Inline field with input' })).toHaveValue('test');
-  // await page.getByLabel('Inline field with input').fill('test');
-  // await expect(page.getByLabel('Inline field with input')).toHaveValue('test');
 });
 
 test('Select should have options', async ({
