@@ -31,15 +31,17 @@ test('Inline field with switch', async ({
 test('Inline field with checkbox', async ({ readProvisionedDataSource, createDataSourceConfigPage, page }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   await createDataSourceConfigPage({ type: ds.type });
-  await page.getByLabel('Inline field with checkbox').uncheck({ force: true });
-  await expect(page.getByLabel('Inline field with checkbox')).not.toBeChecked();
+  await page.getByRole('checkbox', { name: 'Inline field with checkbox Checkbox label' }).uncheck({ force: true });
+  await expect(page.getByRole('checkbox', { name: 'Inline field with checkbox Checkbox label' })).not.toBeChecked();
 });
 
 test('Inline field with input', async ({ readProvisionedDataSource, createDataSourceConfigPage, page }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   await createDataSourceConfigPage({ type: ds.type });
-  await page.getByLabel('Inline field with input').fill('test');
-  await expect(page.getByLabel('Inline field with input')).toHaveValue('test');
+  await page.getByRole('textbox', { name: 'Inline field with input' }).fill('test');
+  await expect(page.getByRole('textbox', { name: 'Inline field with input' })).toHaveValue('test');
+  // await page.getByLabel('Inline field with input').fill('test');
+  // await expect(page.getByLabel('Inline field with input')).toHaveValue('test');
 });
 
 test('Select should have options', async ({
@@ -50,7 +52,7 @@ test('Select should have options', async ({
 }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   const configPage = await createDataSourceConfigPage({ type: ds.type });
-  await page.getByLabel('Inline field with select').click();
+  await page.getByRole('combobox', { name: 'Inline field with select' }).click();
   await expect(configPage.getByTestIdOrAriaLabel(selectors.components.Select.option)).toHaveText([
     'val1',
     'val2',
@@ -61,7 +63,7 @@ test('Select should have options', async ({
 test('Selecting an option', async ({ readProvisionedDataSource, createDataSourceConfigPage, page, selectors }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   const configPage = await createDataSourceConfigPage({ type: ds.type });
-  await page.getByLabel('Inline field with select').click();
+  await page.getByRole('combobox', { name: 'Inline field with select' }).click();
   await configPage.getByTestIdOrAriaLabel(selectors.components.Select.option).getByText('val3').click();
   // await expect(configPage.getByTestIdOrAriaLabel('inline-field-with-select-wrapper')).toHaveText('val3');
 });
