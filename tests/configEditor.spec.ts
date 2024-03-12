@@ -19,9 +19,10 @@ test('Inline field with switch', async ({
   await createDataSourceConfigPage({ type: ds.type });
   // getByRole not working because the input element is outside of the viewport
   // passing label to Switch as it will be defined as aria-label
-  let switchLocator = page.getByLabel('Inline field with switch');
+  const label = 'Inline field with switch';
+  let switchLocator = page.getByLabel(label);
   if (semver.lt(grafanaVersion, '9.3.0')) {
-    switchLocator = switchLocator.locator('../label');
+    switchLocator = page.locator(`[label="${label}"]`).locator('../label');
   }
   await switchLocator.uncheck({ force: true });
   await expect(switchLocator).not.toBeChecked();
@@ -30,7 +31,7 @@ test('Inline field with switch', async ({
 test('Inline field with checkbox', async ({ readProvisionedDataSource, createDataSourceConfigPage, page }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   await createDataSourceConfigPage({ type: ds.type });
-  await page.getByRole('checkbox', { name: 'Inline field with checkbox' }).uncheck({ force: true });
+  await page.getByLabel('Inline field with checkbox').uncheck({ force: true });
   await expect(page.getByLabel('Inline field with checkbox')).not.toBeChecked();
 });
 

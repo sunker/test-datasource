@@ -19,6 +19,7 @@ export function ConfigEditor(props: Props) {
 
       <InlineField labelWidth={30} label="Inline field with switch">
         <InlineSwitch
+          // the InlineSwitch label needs to match the label of the InlineField
           label="Inline field with switch"
           value={booleanValue}
           onChange={(event) => setBooleanValue(event.currentTarget.checked)}
